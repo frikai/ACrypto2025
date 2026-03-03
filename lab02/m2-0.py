@@ -1,7 +1,8 @@
 import json
 import socket
+import math
 
-PORT = 50200
+PORT = 50220
 REMOTE = True
 HOST = "aclabs.ethz.ch"
 
@@ -25,4 +26,13 @@ def pad(X: bytes | bytearray, k: int) -> bytes:
     return bytes([x for x in X] + p)
 
 
-print(run_command({"command": "flag", "token": "534554454320415354524f4e4f4d59"}))
+def blocks(X: list | bytes | bytearray | str, size=16):
+    return [X[i : i + size] for i in range(0, len(X), size)]
+
+
+m = "flag, please!"
+mp = pad(m.encode(), 16)
+res = run_command({"command": "encrypt", "prepend_pad": mp.hex()})["res"]
+print(blocks(res, 32))
+encm = res[0 : len(blocks(mp)) * 32]
+print(run_command({"command": "solve", "ciphertext": encm}))

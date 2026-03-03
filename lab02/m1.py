@@ -25,4 +25,20 @@ def pad(X: bytes | bytearray, k: int) -> bytes:
     return bytes([x for x in X] + p)
 
 
-print(run_command({"command": "flag", "token": "534554454320415354524f4e4f4d59"}))
+file_path = "lab02/aes.data"
+
+try:
+    with open(file_path, "r", encoding="utf-8") as file:
+        for line in file:
+            # .strip() removes trailing newlines (\n) and whitespace
+            l = line.strip()
+            lbs = [l[i : i + 32] for i in range(0, len(l), 32)]
+            s = set(lbs)
+            if len(s) < len(lbs):
+                print(l)
+
+
+except FileNotFoundError:
+    print(f"Error: The file {file_path} was not found.")
+
+# print(run_command({"command": "flag", "token": "534554454320415354524f4e4f4d59"}))

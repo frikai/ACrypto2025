@@ -34,7 +34,7 @@ class Server(CommandServer):
         if "name" in msg:
             self.send_message(
                 {
-                    "res": f"Welcome to the oracle, {msg['name']}! The \"flag\" command will give you the flag!"
+                    "res": f'Welcome to the oracle, {msg["name"]}! The "flag" command will give you the flag!'
                 }
             )
         else:
